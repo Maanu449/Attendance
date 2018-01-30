@@ -1,33 +1,34 @@
 package cfd.ram.attendance;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.View;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InstituteLogin extends AppCompatActivity {
+public class InstitutePage extends AppCompatActivity {
 
     private List<Prof> profList = new ArrayList<>();
     private RecyclerView mProfRecView;
     private ProfInstiPageAdapter mProfAdapter;
     private DatabaseReference mDatabaseRef1,mDatabaseRef2;
+    private FloatingActionButton addProfDetailsFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_institute_login);
+        setContentView(R.layout.activity_institute_page);
 
+        addProfDetailsFab = findViewById(R.id.fab_to_add_prof_details);
         mDatabaseRef1 = FirebaseDatabase.getInstance().getReference().child("Institute").child("Institute").child("Institute Name");
 
         mProfRecView=findViewById(R.id.recycler_view);
@@ -70,6 +71,15 @@ public class InstituteLogin extends AppCompatActivity {
         Prof newa = new Prof("ritwik", "facebook");
         profList.add(newa);
         mProfAdapter.notifyDataSetChanged();
+
+        addProfDetailsFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(InstitutePage.this, AddProfDetails.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 
