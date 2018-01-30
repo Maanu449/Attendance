@@ -77,7 +77,6 @@ public class InstitutePage extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(InstitutePage.this, AddProfDetails.class);
                 startActivity(intent);
-                finish();
             }
         });
 
