@@ -1,7 +1,9 @@
 package cfd.ram.attendance;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +13,10 @@ import android.widget.ImageView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class AddProfDetails extends AppCompatActivity {
@@ -24,6 +29,8 @@ public class AddProfDetails extends AppCompatActivity {
     private TextInputEditText prof_name;
     private TextInputEditText prof_email;
     private TextInputEditText prof_rank;
+    FirebaseStorage storage;
+    StorageReference storageReference;
 
 
     @Override
@@ -35,6 +42,8 @@ public class AddProfDetails extends AppCompatActivity {
         prof_name = findViewById(R.id.prof_name);
         prof_email = findViewById(R.id.email_id);
         prof_rank = findViewById(R.id.rank);
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
         profImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,8 +78,16 @@ public class AddProfDetails extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_POST_GALLERY_REQ && resultCode == RESULT_OK) {
-            uri = data.getData();
-            profImg.setImageURI(uri);
+                uri = data.getData();
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                    profImg.setImageBitmap(bitmap);
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+
         }
     }
 }

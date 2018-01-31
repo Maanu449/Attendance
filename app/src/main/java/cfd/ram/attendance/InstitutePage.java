@@ -7,10 +7,15 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +27,7 @@ public class InstitutePage extends AppCompatActivity {
     private ProfInstiPageAdapter mProfAdapter;
     private DatabaseReference mDatabaseRef1,mDatabaseRef2;
     private FloatingActionButton addProfDetailsFab;
+    String profName, profEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,21 +44,14 @@ public class InstitutePage extends AppCompatActivity {
         mProfRecView.setLayoutManager(mLayoutManager);
         mProfRecView.setItemAnimator(new DefaultItemAnimator());
         mProfRecView.setAdapter(mProfAdapter);
-/*
+
         mDatabaseRef1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String profName = dataSnapshot.child("adni").child("Namatch_parentme").getValue().toString();
-                String profEmail = dataSnapshot.child("adni").child("Email id").getValue().toString();
-                Log.e("Name",profName );
-                Log.e("Email", profEmail);
-                Prof profff = new Prof(profName,profEmail);
-                profList.add(profff);
+                profName = (String) dataSnapshot.child("abcd").child("Name").getValue();
+                profEmail = (String) dataSnapshot.child("abcd").child("Email").getValue();
 
-               /*
-                String profName1 = dataSnapshot.child("prof2").child("Name").getValue().toString();
-               String profEmail1 = dataSnapshot.child("prof2").child("Email id").getValue().toString();
-                profff = new Prof(profName1, profEmail1);
+                Prof profff = new Prof(profName,profEmail);
                 profList.add(profff);
                 mProfAdapter.notifyDataSetChanged();
 
@@ -60,10 +59,10 @@ public class InstitutePage extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Toast.makeText(getApplicationContext(),"Failed",Toast.LENGTH_SHORT).show();
             }
         });
-*/
+
         Prof obj = new Prof("aarah","gmailid");
         profList.add(obj);
         mProfAdapter.notifyDataSetChanged();
