@@ -26,9 +26,11 @@ public class AddProfDetails extends AppCompatActivity {
     private ImageView profImg;
     private DatabaseReference mDatabaseRef1;
     private Button add_prof;
-    private TextInputEditText prof_name;
-    private TextInputEditText prof_email;
-    private TextInputEditText prof_rank;
+    static String profName;
+    static String profEmail;
+    public TextInputEditText prof_name_mansi;
+    public TextInputEditText prof_email_mansi;
+    public TextInputEditText prof_rank_mansi;
     FirebaseStorage storage;
     StorageReference storageReference;
 
@@ -39,9 +41,9 @@ public class AddProfDetails extends AppCompatActivity {
         setContentView(R.layout.activity_add_prof_details);
         profImg = findViewById(R.id.add_prof_img);
         add_prof = findViewById(R.id.add_prof);
-        prof_name = findViewById(R.id.prof_name);
-        prof_email = findViewById(R.id.email_id);
-        prof_rank = findViewById(R.id.rank);
+        prof_name_mansi = findViewById(R.id.prof_name);
+        prof_email_mansi = findViewById(R.id.email_id);
+        prof_rank_mansi = findViewById(R.id.rank);
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         profImg.setOnClickListener(new View.OnClickListener() {
@@ -57,9 +59,9 @@ public class AddProfDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mDatabaseRef1 = FirebaseDatabase.getInstance().getReference();
-                String profName = prof_name.getText().toString().trim();
-                String profEmail = prof_email.getText().toString().trim();
-                String profRank = prof_rank.getText().toString().trim();
+                 profName = prof_name_mansi.getText().toString().trim();
+                 profEmail = prof_email_mansi.getText().toString().trim();
+                String profRank = prof_rank_mansi.getText().toString().trim();
 
                 HashMap<String, String> mdataMap = new HashMap<String, String>();
                 mdataMap.put("Name", profName);
@@ -89,5 +91,13 @@ public class AddProfDetails extends AppCompatActivity {
                 }
 
         }
+    }
+
+    public String getName(){
+        return profName;
+    }
+
+    public String getEmail(){
+        return profEmail;
     }
 }
