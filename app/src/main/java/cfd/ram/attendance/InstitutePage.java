@@ -21,12 +21,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.google.android.gms.internal.zzbfq.NULL;
+
 public class InstitutePage extends AppCompatActivity {
 
     private List<Prof> profList = new ArrayList<>();
     private RecyclerView mProfRecView;
     private ProfInstiPageAdapter mProfAdapter;
-    private DatabaseReference mDatabaseRef1,mDatabaseRef2;
+    private DatabaseReference mDatabaseRef1;
     private FloatingActionButton addProfDetailsFab;
     String profName, profEmail;
 
@@ -46,48 +48,19 @@ public class InstitutePage extends AppCompatActivity {
         mProfRecView.setItemAnimator(new DefaultItemAnimator());
         mProfRecView.setAdapter(mProfAdapter);
 
-        mDatabaseRef1.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                AddProfDetails obj1 = new AddProfDetails();
-                String pName = obj1.getName();
-                String pEmail = obj1.getEmail();
-                Toast.makeText(getApplicationContext(),pName + "  " + pEmail,Toast.LENGTH_SHORT).show();
-                Prof obj = new Prof(pName, pEmail);
-                profList.add(obj);
-                mProfAdapter.notifyDataSetChanged();
-            }
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-/*
         mDatabaseRef1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                profName = (String) dataSnapshot.child("abcd").child("Name").getValue();
-                profEmail = (String) dataSnapshot.child("abcd").child("Email").getValue();
+               profList.clear();
+                for(DataSnapshot post1: dataSnapshot.getChildren()){
+                profName = (String) post1.child("Name").getValue();
+                profEmail = (String) post1.child("Email").getValue();
 
                 Prof profff = new Prof(profName,profEmail);
                 profList.add(profff);
                 mProfAdapter.notifyDataSetChanged();
+               }
 
             }
 
@@ -96,14 +69,6 @@ public class InstitutePage extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Failed",Toast.LENGTH_SHORT).show();
             }
         });
-*/
-        Prof obj = new Prof("aarah","gmailid");
-        profList.add(obj);
-        mProfAdapter.notifyDataSetChanged();
-
-        Prof newa = new Prof("ritwik", "facebook");
-        profList.add(newa);
-        mProfAdapter.notifyDataSetChanged();
 
         addProfDetailsFab.setOnClickListener(new View.OnClickListener() {
             @Override

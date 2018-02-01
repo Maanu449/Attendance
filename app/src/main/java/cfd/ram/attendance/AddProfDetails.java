@@ -19,6 +19,8 @@ import com.google.firebase.storage.StorageReference;
 import java.io.IOException;
 import java.util.HashMap;
 
+import static com.google.android.gms.internal.zzbfq.NULL;
+
 public class AddProfDetails extends AppCompatActivity {
 
     private final int NEW_POST_GALLERY_REQ = 2;
@@ -26,11 +28,11 @@ public class AddProfDetails extends AppCompatActivity {
     private ImageView profImg;
     private DatabaseReference mDatabaseRef1;
     private Button add_prof;
-    static String profName;
-    static String profEmail;
-    public TextInputEditText prof_name_mansi;
-    public TextInputEditText prof_email_mansi;
-    public TextInputEditText prof_rank_mansi;
+    static String profName = NULL;
+    static String profEmail = NULL;
+    TextInputEditText prof_name_mansi;
+    TextInputEditText prof_email_mansi;
+    TextInputEditText prof_rank_mansi;
     FirebaseStorage storage;
     StorageReference storageReference;
 
@@ -69,6 +71,8 @@ public class AddProfDetails extends AppCompatActivity {
                 mdataMap.put("Rank", profRank);
                 mDatabaseRef1.child("Institute").child("Institute").child("Institute Name").child(profName).setValue(mdataMap);
 
+
+
                 finish();
             }
         });
@@ -93,11 +97,4 @@ public class AddProfDetails extends AppCompatActivity {
         }
     }
 
-    public String getName(){
-        return profName;
-    }
-
-    public String getEmail(){
-        return profEmail;
-    }
 }
